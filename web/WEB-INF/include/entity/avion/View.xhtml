@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="AvionViewDlg" widgetVar="AvionViewDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{myBundle.ViewAvionTitle}" closeOnEscape="true">
+
+            <h:form id="AvionViewForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" columnClasses="column" rendered="#{avionController.selected != null}">
+
+                        <h:outputText value="#{myBundle.ViewAvionLabel_matricula}"/>
+                        <h:outputText value="#{avionController.selected.matricula}" title="#{myBundle.ViewAvionTitle_matricula}"/>
+
+                        <h:outputText value="#{myBundle.ViewAvionLabel_capacidadCombustible}"/>
+                        <h:outputText value="#{avionController.selected.capacidadCombustible}" title="#{myBundle.ViewAvionTitle_capacidadCombustible}"/>
+
+                        <h:outputText value="#{myBundle.ViewAvionLabel_ciudad}"/>
+                        <h:outputText value="#{avionController.selected.ciudad.idCiudad}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{myBundle.Close}" onclick="PF('AvionViewDialog').hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

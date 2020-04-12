@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+        <p:dialog id="OperacionEditDlg" widgetVar="OperacionEditDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{myBundle.EditOperacionTitle}" closeOnEscape="true">
+
+            <h:form id="OperacionEditForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid  columns="2" columnClasses="column" rendered="#{operacionController.selected != null}">
+
+
+                        <h:outputLabel value="#{myBundle.EditOperacionLabel_idoperacion}" for="idoperacion" />
+                        <h:outputText id="idoperacion" value="#{operacionController.selected.idoperacion}" />
+
+                        <p:outputLabel value="#{myBundle.EditOperacionLabel_proveedor}" for="proveedor" />
+                        <p:inputText id="proveedor" value="#{operacionController.selected.proveedor}" title="#{myBundle.EditOperacionTitle_proveedor}" size="45" maxlength="45"/>
+
+                        <p:outputLabel value="#{myBundle.EditOperacionLabel_cantidadCombustible}" for="cantidadCombustible" />
+                        <p:inputText id="cantidadCombustible" value="#{operacionController.selected.cantidadCombustible}" title="#{myBundle.EditOperacionTitle_cantidadCombustible}" size="45" maxlength="45"/>
+
+                        <p:outputLabel value="#{myBundle.EditOperacionLabel_precioxlibra}" for="precioxlibra" />
+                        <p:inputText id="precioxlibra" value="#{operacionController.selected.precioxlibra}" title="#{myBundle.EditOperacionTitle_precioxlibra}"/>
+
+                        <p:outputLabel value="#{myBundle.EditOperacionLabel_precioTotal}" for="precioTotal" />
+                        <p:inputText id="precioTotal" value="#{operacionController.selected.precioTotal}" title="#{myBundle.EditOperacionTitle_precioTotal}"/>
+
+                        <p:outputLabel value="#{myBundle.EditOperacionLabel_plataforma}" for="plataforma" />
+                        <p:selectOneMenu id="plataforma" value="#{operacionController.selected.plataforma}" required="true" requiredMessage="#{myBundle.EditOperacionRequiredMessage_plataforma}" converter="plataformaConverter">
+                            <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{plataformaController.items}"
+                                           var="plataformaItem"
+                                           itemValue="#{plataformaItem}"
+                                           itemLabel="#{plataformaItem.idplat.toString()}"
+                                           />
+
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{operacionController.save}" value="#{myBundle.Save}" update="display,:OperacionListForm:datalist,:OperacionListForm:OperacionDataTableContextMenu,:growl" oncomplete="handleSubmit(xhr,status,args,PF('OperacionEditDialog'));">
+                        <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmEditMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+                    <p:commandButton value="#{myBundle.Cancel}" oncomplete="PF('OperacionEditDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

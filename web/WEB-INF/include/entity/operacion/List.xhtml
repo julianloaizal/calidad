@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+
+    <h:form id="OperacionListForm">
+
+        <p:panel header="#{myBundle.ListOperacionTitle}">
+            <p:contextMenu id="OperacionDataTableContextMenu" for="datalist">  
+                <p:menuitem value="#{myBundle.Create}" onclick="document.getElementById('OperacionListForm:createButton').click();" icon="ui-icon-plus"/>
+                <p:menuitem value="#{myBundle.View}" onclick="document.getElementById('OperacionListForm:viewButton').click();" icon="ui-icon-search"/>
+                <p:menuitem value="#{myBundle.Edit}" onclick="document.getElementById('OperacionListForm:editButton').click();" icon="ui-icon-pencil"/>
+                <p:menuitem value="#{myBundle.Delete}" onclick="document.getElementById('OperacionListForm:deleteButton').click();" icon="ui-icon-trash"/>
+                <p:separator/>
+                <p:menuitem value="#{myBundle.OperacionMenuItem_plataforma}" icon="ui-icon-search"  actionListener="#{operacionController.preparePlataforma}" update=":PlataformaViewForm" oncomplete="PF('PlataformaViewDialog').show()" disabled="#{empty operacionController.selected.plataforma}"/>  
+            </p:contextMenu>
+            <p:dataTable id="datalist"
+                         value="#{operacionController.items}"
+                         lazy="false"
+                         rowKey="#{item.idoperacion}"
+                         var="item"
+                         paginator="true"
+                         rows="10"
+                         rowsPerPageTemplate="10,20,30,40,50"
+                         selectionMode="single"
+                         selection="#{operacionController.selected}"
+                         filteredValue="#{operacionController.filteredItems}">
+                <!--
+                         To enable Lazy Loading, please copy/replace the following lines above,
+                         and be sure to replace the word HASH with the # symbol:
+                
+                         value="HASH{operacionController.lazyItems}"
+                         lazy="true"
+                         rowKey="HASH{item.idoperacion}"  <<< Remove this line
+                -->
+
+
+                <p:ajax event="rowSelect"   update="@form:createButton,@form:viewButton,@form:editButton,@form:deleteButton,@form:OperacionDataTableContextMenu" listener="#{operacionController.resetParents}"/>
+                <p:ajax event="rowUnselect" update="@form:createButton,@form:viewButton,@form:editButton,@form:deleteButton,@form:OperacionDataTableContextMenu" listener="#{operacionController.resetParents}"/>
+                <p:ajax event="contextMenu" update="@form:createButton @form:viewButton @form:editButton @form:deleteButton" listener="#{operacionController.resetParents}"/>
+                <p:ajax event="rowDblselect" onsuccess="document.getElementById('OperacionListForm:viewButton').click();"/>
+
+                <p:column sortBy="#{item.idoperacion}" filterBy="#{item.idoperacion}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListOperacionTitle_idoperacion}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.idoperacion}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.proveedor}" filterBy="#{item.proveedor}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListOperacionTitle_proveedor}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.proveedor}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.cantidadCombustible}" filterBy="#{item.cantidadCombustible}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListOperacionTitle_cantidadCombustible}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.cantidadCombustible}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.precioxlibra}" filterBy="#{item.precioxlibra}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListOperacionTitle_precioxlibra}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.precioxlibra}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.precioTotal}" filterBy="#{item.precioTotal}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListOperacionTitle_precioTotal}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.precioTotal}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.plataforma.idplat}" filterBy="#{item.plataforma.idplat}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListOperacionTitle_plataforma}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.plataforma.idplat}"/>
+                </p:column>
+
+
+            </p:dataTable>
+
+            <p:commandButton id="createButton"                             icon="ui-icon-plus"   value="#{myBundle.Create}" actionListener="#{operacionController.prepareCreate}" update=":OperacionCreateForm" oncomplete="PF('OperacionCreateDialog').show()"/>
+            <p:commandButton id="viewButton"   style="visibility: hidden;" icon="ui-icon-search" value="#{myBundle.View}" update=":OperacionViewForm" oncomplete="PF('OperacionViewDialog').show()" disabled="#{empty operacionController.selected}"/>
+            <p:commandButton id="editButton"   style="visibility: hidden;" icon="ui-icon-pencil" value="#{myBundle.Edit}" update=":OperacionEditForm" oncomplete="PF('OperacionEditDialog').show()" disabled="#{empty operacionController.selected}"/>
+            <p:commandButton id="deleteButton" style="visibility: hidden;" icon="ui-icon-trash"  value="#{myBundle.Delete}" actionListener="#{operacionController.delete}" update=":growl,datalist" disabled="#{empty operacionController.selected}">
+                <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmDeleteMessage}" icon="ui-icon-alert"/>
+            </p:commandButton>
+
+        </p:panel>
+        <ui:include src="/WEB-INF/include/confirmation.xhtml"/>
+    </h:form>
+
+</ui:composition>

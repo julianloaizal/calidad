@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="EmpleadoViewDlg" widgetVar="EmpleadoViewDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{myBundle.ViewEmpleadoTitle}" closeOnEscape="true">
+
+            <h:form id="EmpleadoViewForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" columnClasses="column" rendered="#{empleadoController.selected != null}">
+
+                        <h:outputText value="#{myBundle.ViewEmpleadoLabel_empleadoPK_cc}"/>
+                        <h:outputText value="#{empleadoController.selected.empleadoPK.cc}" title="#{myBundle.ViewEmpleadoTitle_empleadoPK_cc}"/>
+
+                        <h:outputText value="#{myBundle.ViewEmpleadoLabel_empleadoPK_platf}"/>
+                        <h:outputText value="#{empleadoController.selected.empleadoPK.platf}" title="#{myBundle.ViewEmpleadoTitle_empleadoPK_platf}"/>
+
+                        <h:outputText value="#{myBundle.ViewEmpleadoLabel_fechaIngreo}"/>
+                        <h:outputText value="#{empleadoController.selected.fechaIngreo}" title="#{myBundle.ViewEmpleadoTitle_fechaIngreo}"/>
+
+                        <h:outputText value="#{myBundle.ViewEmpleadoLabel_peso}"/>
+                        <h:outputText value="#{empleadoController.selected.peso}" title="#{myBundle.ViewEmpleadoTitle_peso}"/>
+
+                        <h:outputText value="#{myBundle.ViewEmpleadoLabel_estatura}"/>
+                        <h:outputText value="#{empleadoController.selected.estatura}" title="#{myBundle.ViewEmpleadoTitle_estatura}"/>
+
+                        <h:outputText value="#{myBundle.ViewEmpleadoLabel_cargoIdCargo}"/>
+                        <h:outputText value="#{empleadoController.selected.cargoIdCargo.descripcion}"/>
+
+                        <h:outputText value="#{myBundle.ViewEmpleadoLabel_plataforma}"/>
+                        <h:outputText value="#{empleadoController.selected.plataforma.idplat}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{myBundle.Close}" onclick="PF('EmpleadoViewDialog').hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

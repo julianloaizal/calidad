@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="OperacionViewDlg" widgetVar="OperacionViewDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{myBundle.ViewOperacionTitle}" closeOnEscape="true">
+
+            <h:form id="OperacionViewForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" columnClasses="column" rendered="#{operacionController.selected != null}">
+
+                        <h:outputText value="#{myBundle.ViewOperacionLabel_idoperacion}"/>
+                        <h:outputText value="#{operacionController.selected.idoperacion}" title="#{myBundle.ViewOperacionTitle_idoperacion}"/>
+
+                        <h:outputText value="#{myBundle.ViewOperacionLabel_proveedor}"/>
+                        <h:outputText value="#{operacionController.selected.proveedor}" title="#{myBundle.ViewOperacionTitle_proveedor}"/>
+
+                        <h:outputText value="#{myBundle.ViewOperacionLabel_cantidadCombustible}"/>
+                        <h:outputText value="#{operacionController.selected.cantidadCombustible}" title="#{myBundle.ViewOperacionTitle_cantidadCombustible}"/>
+
+                        <h:outputText value="#{myBundle.ViewOperacionLabel_precioxlibra}"/>
+                        <h:outputText value="#{operacionController.selected.precioxlibra}" title="#{myBundle.ViewOperacionTitle_precioxlibra}"/>
+
+                        <h:outputText value="#{myBundle.ViewOperacionLabel_precioTotal}"/>
+                        <h:outputText value="#{operacionController.selected.precioTotal}" title="#{myBundle.ViewOperacionTitle_precioTotal}"/>
+
+                        <h:outputText value="#{myBundle.ViewOperacionLabel_plataforma}"/>
+                        <h:outputText value="#{operacionController.selected.plataforma.idplat}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{myBundle.Close}" onclick="PF('OperacionViewDialog').hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+                xmlns:pm="http://primefaces.org/mobile">
+
+    <pm:page id="OperacionListPage">
+        <pm:header title="#{myBundle.ListOperacionTitle}">
+            <h:form>
+                <p:commandButton id="backButton"   styleClass="ui-btn-left  ui-btn-inline" icon="ui-icon-arrow-l" value="#{myBundle.Back}" action="#{mobilePageController.navigateBackInHistory('/mobile/index')}"/>
+                <p:commandButton id="createButton" styleClass="ui-btn-right ui-btn-inline" icon="ui-icon-plus"    value="#{myBundle.Create}" update=":OperacionCreatePage:OperacionCreateForm" actionListener="#{operacionController.prepareCreate}" action="#{mobilePageController.navigateWithHistory('pm:OperacionCreatePage')}">
+                    <f:actionListener binding="#{currentPageListener}"/>
+                </p:commandButton>
+            </h:form>
+        </pm:header>
+
+        <pm:content>
+
+            <h:form id="OperacionListForm">
+
+                <p:dataList id="datalist"
+                            paginator="true"
+                            rows="10"
+                            rowsPerPageTemplate="10,20,30,40,50"
+                            pt:data-inset="true"
+                            value="#{operacionController.items}"
+                            var="item">
+
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListOperacionTitle}"/>
+                    </f:facet>
+
+                    <p:commandLink update=":OperacionEditPage:OperacionEditForm" action="pm:OperacionEditPage">
+                        <p>
+
+
+
+                            <h:outputText value="#{item.idoperacion}"/>
+
+
+
+                            ,&nbsp;
+                            <h:outputText value="#{item.proveedor}"/>
+
+
+
+                            ,&nbsp;
+                            <h:outputText value="#{item.cantidadCombustible}"/>
+
+
+
+                            ,&nbsp;
+                            <h:outputText value="#{item.precioxlibra}"/>
+
+
+
+                            ,&nbsp;
+                            <h:outputText value="#{item.precioTotal}"/>
+
+
+
+                            ,&nbsp;
+                            <h:outputText value="#{item.plataforma.idplat}"/>
+
+                        </p>
+                        <f:setPropertyActionListener value="#{item}" target="#{operacionController.selected}" />
+                    </p:commandLink>
+
+                    <f:facet name="footer">
+                        <h:outputText value="#{myBundle.ListOperacionTitle}"/>
+                    </f:facet>
+
+                </p:dataList>
+            </h:form>
+
+        </pm:content>
+
+    </pm:page>
+
+</ui:composition>
