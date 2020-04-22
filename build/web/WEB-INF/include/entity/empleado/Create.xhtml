@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="EmpleadoCreateDlg" widgetVar="EmpleadoCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{myBundle.CreateEmpleadoTitle}" closeOnEscape="true">
+
+            <h:form id="EmpleadoCreateForm">
+
+                <h:panelGroup id="display" rendered="#{empleadoController.selected != null}">
+                    <p:panelGrid columns="2" columnClasses="column">
+
+                        <p:outputLabel value="#{myBundle.CreateEmpleadoLabel_empleadoPK_cc}" for="empleadoPK_cc" />
+                        <p:inputText id="empleadoPK_cc" value="#{empleadoController.selected.empleadoPK.cc}" title="#{myBundle.CreateEmpleadoTitle_empleadoPK_cc}" required="true" requiredMessage="#{myBundle.CreateEmpleadoRequiredMessage_empleadoPK_cc}" size="45" maxlength="45"/>
+
+                        <p:outputLabel value="#{myBundle.CreateEmpleadoLabel_empleadoPK_platf}" for="empleadoPK_platf" />
+                        <p:inputText id="empleadoPK_platf" value="#{empleadoController.selected.empleadoPK.platf}" title="#{myBundle.CreateEmpleadoTitle_empleadoPK_platf}" required="true" requiredMessage="#{myBundle.CreateEmpleadoRequiredMessage_empleadoPK_platf}" size="45" maxlength="45"/>
+
+                        <p:outputLabel value="#{myBundle.CreateEmpleadoLabel_fechaIngreo}" for="fechaIngreo" />
+                        <p:inputText id="fechaIngreo" value="#{empleadoController.selected.fechaIngreo}" title="#{myBundle.CreateEmpleadoTitle_fechaIngreo}" size="45" maxlength="45"/>
+
+                        <p:outputLabel value="#{myBundle.CreateEmpleadoLabel_peso}" for="peso" />
+                        <p:inputText id="peso" value="#{empleadoController.selected.peso}" title="#{myBundle.CreateEmpleadoTitle_peso}"/>
+
+                        <p:outputLabel value="#{myBundle.CreateEmpleadoLabel_estatura}" for="estatura" />
+                        <p:inputText id="estatura" value="#{empleadoController.selected.estatura}" title="#{myBundle.CreateEmpleadoTitle_estatura}"/>
+
+                        <p:outputLabel value="#{myBundle.CreateEmpleadoLabel_cargoIdCargo}" for="cargoIdCargo" />
+                        <p:selectOneMenu id="cargoIdCargo" value="#{empleadoController.selected.cargoIdCargo}"  converter="cargoConverter">
+                            <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{cargoController.items}"
+                                           var="cargoIdCargoItem"
+                                           itemValue="#{cargoIdCargoItem}"
+                                           itemLabel="#{cargoIdCargoItem.descripcion.toString()}"
+                                           />
+
+                        </p:selectOneMenu>
+
+                        <p:outputLabel value="#{myBundle.CreateEmpleadoLabel_plataforma}" for="plataforma" />
+                        <p:selectOneMenu id="plataforma" value="#{empleadoController.selected.plataforma}" required="true" requiredMessage="#{myBundle.CreateEmpleadoRequiredMessage_plataforma}" converter="plataformaConverter">
+                            <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{plataformaController.items}"
+                                           var="plataformaItem"
+                                           itemValue="#{plataformaItem}"
+                                           itemLabel="#{plataformaItem.idplat.toString()}"
+                                           />
+
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{empleadoController.saveNew}" value="#{myBundle.Save}" update="display,:EmpleadoListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('EmpleadoCreateDialog'));">
+                        <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmCreateMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+
+                    <p:commandButton value="#{myBundle.Cancel}" oncomplete="PF('EmpleadoCreateDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:pm="http://primefaces.org/mobile">
+
+    <pm:page id="PlataformaCreatePage" lazy="true">
+        <pm:header title="#{myBundle.CreatePlataformaTitle}">
+            <h:form>
+                <p:commandButton styleClass="ui-btn-left ui-btn-inline" value="#{myBundle.Cancel}" icon="ui-icon-arrow-l" action="#{mobilePageController.navigateBackInHistory('pm:PlataformaListPage')}"/>
+            </h:form>
+        </pm:header>
+
+        <pm:content>
+
+            <h:form id="PlataformaCreateForm">
+
+                <h:panelGroup id="display" rendered="#{plataformaController.selected != null}">
+                    <p:outputPanel>
+
+                        <pm:field>
+                            <p:outputLabel value="#{myBundle.CreatePlataformaLabel_idplat}" for="idplat" />
+                            <p:inputText id="idplat" value="#{plataformaController.selected.idplat}" title="#{myBundle.CreatePlataformaTitle_idplat}" required="true" requiredMessage="#{myBundle.CreatePlataformaRequiredMessage_idplat}" size="45" maxlength="45"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{myBundle.CreatePlataformaLabel_cobroxhora}" for="cobroxhora" />
+                            <p:inputText id="cobroxhora" value="#{plataformaController.selected.cobroxhora}" title="#{myBundle.CreatePlataformaTitle_cobroxhora}"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{myBundle.CreatePlataformaLabel_impuesto}" for="impuesto" />
+                            <p:inputText id="impuesto" value="#{plataformaController.selected.impuesto}" title="#{myBundle.CreatePlataformaTitle_impuesto}"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{myBundle.CreatePlataformaLabel_operacion}" for="operacion" />
+                            <p:selectOneMenu id="operacion" value="#{plataformaController.selected.operacion}"  converter="operacionConverter">
+                                <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                                <f:selectItems value="#{operacionController.items}"
+                                               var="operacionItem"
+                                               itemValue="#{operacionItem}"
+                                               itemLabel="#{operacionItem.idoperacion.toString()}"
+                                               />
+
+                            </p:selectOneMenu>
+                        </pm:field>
+                    </p:outputPanel>
+                    <p:commandButton actionListener="#{plataformaController.saveNew}" value="#{myBundle.Save}" update="display,:PlataformaListPage:PlataformaListForm:datalist,:growl" action="#{mobilePageController.navigateWithHistory('pm:PlataformaListPage')}"/>
+
+                </h:panelGroup>
+
+            </h:form>
+
+        </pm:content>
+
+    </pm:page>
+
+</ui:composition>

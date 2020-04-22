@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:pm="http://primefaces.org/mobile">
+
+    <pm:page id="OperacionCreatePage" lazy="true">
+        <pm:header title="#{myBundle.CreateOperacionTitle}">
+            <h:form>
+                <p:commandButton styleClass="ui-btn-left ui-btn-inline" value="#{myBundle.Cancel}" icon="ui-icon-arrow-l" action="#{mobilePageController.navigateBackInHistory('pm:OperacionListPage')}"/>
+            </h:form>
+        </pm:header>
+
+        <pm:content>
+
+            <h:form id="OperacionCreateForm">
+
+                <h:panelGroup id="display" rendered="#{operacionController.selected != null}">
+                    <p:outputPanel>
+
+                        <pm:field>
+                            <p:outputLabel value="#{myBundle.CreateOperacionLabel_idoperacion}" for="idoperacion" />
+                            <p:inputText id="idoperacion" value="#{operacionController.selected.idoperacion}" title="#{myBundle.CreateOperacionTitle_idoperacion}" required="true" requiredMessage="#{myBundle.CreateOperacionRequiredMessage_idoperacion}" size="45" maxlength="45"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{myBundle.CreateOperacionLabel_proveedor}" for="proveedor" />
+                            <p:inputText id="proveedor" value="#{operacionController.selected.proveedor}" title="#{myBundle.CreateOperacionTitle_proveedor}" size="45" maxlength="45"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{myBundle.CreateOperacionLabel_cantidadCombustible}" for="cantidadCombustible" />
+                            <p:inputText id="cantidadCombustible" value="#{operacionController.selected.cantidadCombustible}" title="#{myBundle.CreateOperacionTitle_cantidadCombustible}" size="45" maxlength="45"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{myBundle.CreateOperacionLabel_precioxlibra}" for="precioxlibra" />
+                            <p:inputText id="precioxlibra" value="#{operacionController.selected.precioxlibra}" title="#{myBundle.CreateOperacionTitle_precioxlibra}"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{myBundle.CreateOperacionLabel_precioTotal}" for="precioTotal" />
+                            <p:inputText id="precioTotal" value="#{operacionController.selected.precioTotal}" title="#{myBundle.CreateOperacionTitle_precioTotal}"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{myBundle.CreateOperacionLabel_plataforma}" for="plataforma" />
+                            <p:selectOneMenu id="plataforma" value="#{operacionController.selected.plataforma}" required="true" requiredMessage="#{myBundle.CreateOperacionRequiredMessage_plataforma}" converter="plataformaConverter">
+                                <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                                <f:selectItems value="#{plataformaController.items}"
+                                               var="plataformaItem"
+                                               itemValue="#{plataformaItem}"
+                                               itemLabel="#{plataformaItem.idplat.toString()}"
+                                               />
+
+                            </p:selectOneMenu>
+                        </pm:field>
+                    </p:outputPanel>
+                    <p:commandButton actionListener="#{operacionController.saveNew}" value="#{myBundle.Save}" update="display,:OperacionListPage:OperacionListForm:datalist,:growl" action="#{mobilePageController.navigateWithHistory('pm:OperacionListPage')}"/>
+
+                </h:panelGroup>
+
+            </h:form>
+
+        </pm:content>
+
+    </pm:page>
+
+</ui:composition>

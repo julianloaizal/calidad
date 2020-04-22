@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+        <p:dialog id="AvionEditDlg" widgetVar="AvionEditDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{myBundle.EditAvionTitle}" closeOnEscape="true">
+
+            <h:form id="AvionEditForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid  columns="2" columnClasses="column" rendered="#{avionController.selected != null}">
+
+
+                        <h:outputLabel value="#{myBundle.EditAvionLabel_matricula}" for="matricula" />
+                        <h:outputText id="matricula" value="#{avionController.selected.matricula}" />
+
+                        <p:outputLabel value="#{myBundle.EditAvionLabel_capacidadCombustible}" for="capacidadCombustible" />
+                        <p:inputText id="capacidadCombustible" value="#{avionController.selected.capacidadCombustible}" title="#{myBundle.EditAvionTitle_capacidadCombustible}"/>
+
+                        <p:outputLabel value="#{myBundle.EditAvionLabel_ciudad}" for="ciudad" />
+                        <p:selectOneMenu id="ciudad" value="#{avionController.selected.ciudad}"  converter="ciudadConverter">
+                            <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{ciudadController.items}"
+                                           var="ciudadItem"
+                                           itemValue="#{ciudadItem}"
+                                           itemLabel="#{ciudadItem.idCiudad.toString()}"
+                                           />
+
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{avionController.save}" value="#{myBundle.Save}" update="display,:AvionListForm:datalist,:AvionListForm:AvionDataTableContextMenu,:growl" oncomplete="handleSubmit(xhr,status,args,PF('AvionEditDialog'));">
+                        <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmEditMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+                    <p:commandButton value="#{myBundle.Cancel}" oncomplete="PF('AvionEditDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

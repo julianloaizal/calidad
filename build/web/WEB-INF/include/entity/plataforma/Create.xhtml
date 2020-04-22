@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="PlataformaCreateDlg" widgetVar="PlataformaCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{myBundle.CreatePlataformaTitle}" closeOnEscape="true">
+
+            <h:form id="PlataformaCreateForm">
+
+                <h:panelGroup id="display" rendered="#{plataformaController.selected != null}">
+                    <p:panelGrid columns="2" columnClasses="column">
+
+                        <p:outputLabel value="#{myBundle.CreatePlataformaLabel_idplat}" for="idplat" />
+                        <p:inputText id="idplat" value="#{plataformaController.selected.idplat}" title="#{myBundle.CreatePlataformaTitle_idplat}" required="true" requiredMessage="#{myBundle.CreatePlataformaRequiredMessage_idplat}" size="45" maxlength="45"/>
+
+                        <p:outputLabel value="#{myBundle.CreatePlataformaLabel_cobroxhora}" for="cobroxhora" />
+                        <p:inputText id="cobroxhora" value="#{plataformaController.selected.cobroxhora}" title="#{myBundle.CreatePlataformaTitle_cobroxhora}"/>
+
+                        <p:outputLabel value="#{myBundle.CreatePlataformaLabel_impuesto}" for="impuesto" />
+                        <p:inputText id="impuesto" value="#{plataformaController.selected.impuesto}" title="#{myBundle.CreatePlataformaTitle_impuesto}"/>
+
+                        <p:outputLabel value="#{myBundle.CreatePlataformaLabel_operacion}" for="operacion" />
+                        <p:selectOneMenu id="operacion" value="#{plataformaController.selected.operacion}"  converter="operacionConverter">
+                            <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{operacionController.items}"
+                                           var="operacionItem"
+                                           itemValue="#{operacionItem}"
+                                           itemLabel="#{operacionItem.idoperacion.toString()}"
+                                           />
+
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{plataformaController.saveNew}" value="#{myBundle.Save}" update="display,:PlataformaListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('PlataformaCreateDialog'));">
+                        <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmCreateMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+
+                    <p:commandButton value="#{myBundle.Cancel}" oncomplete="PF('PlataformaCreateDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:pm="http://primefaces.org/mobile">
+
+    <pm:page id="AvionCreatePage" lazy="true">
+        <pm:header title="#{myBundle.CreateAvionTitle}">
+            <h:form>
+                <p:commandButton styleClass="ui-btn-left ui-btn-inline" value="#{myBundle.Cancel}" icon="ui-icon-arrow-l" action="#{mobilePageController.navigateBackInHistory('pm:AvionListPage')}"/>
+            </h:form>
+        </pm:header>
+
+        <pm:content>
+
+            <h:form id="AvionCreateForm">
+
+                <h:panelGroup id="display" rendered="#{avionController.selected != null}">
+                    <p:outputPanel>
+
+                        <pm:field>
+                            <p:outputLabel value="#{myBundle.CreateAvionLabel_matricula}" for="matricula" />
+                            <p:inputText id="matricula" value="#{avionController.selected.matricula}" title="#{myBundle.CreateAvionTitle_matricula}" required="true" requiredMessage="#{myBundle.CreateAvionRequiredMessage_matricula}" size="45" maxlength="45"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{myBundle.CreateAvionLabel_capacidadCombustible}" for="capacidadCombustible" />
+                            <p:inputText id="capacidadCombustible" value="#{avionController.selected.capacidadCombustible}" title="#{myBundle.CreateAvionTitle_capacidadCombustible}"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{myBundle.CreateAvionLabel_ciudad}" for="ciudad" />
+                            <p:selectOneMenu id="ciudad" value="#{avionController.selected.ciudad}"  converter="ciudadConverter">
+                                <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                                <f:selectItems value="#{ciudadController.items}"
+                                               var="ciudadItem"
+                                               itemValue="#{ciudadItem}"
+                                               itemLabel="#{ciudadItem.idCiudad.toString()}"
+                                               />
+
+                            </p:selectOneMenu>
+                        </pm:field>
+                    </p:outputPanel>
+                    <p:commandButton actionListener="#{avionController.saveNew}" value="#{myBundle.Save}" update="display,:AvionListPage:AvionListForm:datalist,:growl" action="#{mobilePageController.navigateWithHistory('pm:AvionListPage')}"/>
+
+                </h:panelGroup>
+
+            </h:form>
+
+        </pm:content>
+
+    </pm:page>
+
+</ui:composition>

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+        <p:dialog id="CargoEditDlg" widgetVar="CargoEditDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{myBundle.EditCargoTitle}" closeOnEscape="true">
+
+            <h:form id="CargoEditForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid  columns="2" columnClasses="column" rendered="#{cargoController.selected != null}">
+
+
+                        <h:outputLabel value="#{myBundle.EditCargoLabel_idcargo}" for="idcargo" />
+                        <h:outputText id="idcargo" value="#{cargoController.selected.idcargo}" />
+
+                        <p:outputLabel value="#{myBundle.EditCargoLabel_nombre}" for="nombre" />
+                        <p:inputText id="nombre" value="#{cargoController.selected.nombre}" title="#{myBundle.EditCargoTitle_nombre}" size="45" maxlength="45"/>
+
+                        <p:outputLabel value="#{myBundle.EditCargoLabel_descripcion}" for="descripcion" />
+                        <p:inputText id="descripcion" value="#{cargoController.selected.descripcion}" title="#{myBundle.EditCargoTitle_descripcion}" size="45" maxlength="45"/>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{cargoController.save}" value="#{myBundle.Save}" update="display,:CargoListForm:datalist,:CargoListForm:CargoDataTableContextMenu,:growl" oncomplete="handleSubmit(xhr,status,args,PF('CargoEditDialog'));">
+                        <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmEditMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+                    <p:commandButton value="#{myBundle.Cancel}" oncomplete="PF('CargoEditDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>
